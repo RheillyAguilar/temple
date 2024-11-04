@@ -29,6 +29,343 @@
   const toggle = () => {
     document.getElementsByTagName('panel-layout')[0].toggle('left');
   };
+   // Helper function to toggle classes
+  const toggleClasses = (element, addClasses, removeClasses) => {
+    if (element) {
+      element.classList.add(...addClasses);
+      element.classList.remove(...removeClasses);
+    }
+  };
+
+  // General function to toggle theme modes
+  const toggleTheme = (fromClass, toClass, iconConfig) => {
+    const body = document.body;
+    const icon = document.getElementById('modeIcon');
+    const textA = document.querySelectorAll('a');
+    const tweetBoxes = document.querySelectorAll('tweet-box');
+    const terminals = document.querySelectorAll('ide-code');
+
+    body.classList.replace(fromClass, toClass);
+    textA.forEach(link => toggleClasses(link, iconConfig.linkAdd, iconConfig.linkRemove));
+    tweetBoxes.forEach(tweetBox => toggleClasses(tweetBox, iconConfig.tweetBoxAdd, iconConfig.tweetBoxRemove));
+    terminals.forEach(terminal => toggleClasses(terminal, iconConfig.terminalAdd, iconConfig.terminalRemove));
+    toggleClasses(icon, iconConfig.iconAdd, iconConfig.iconRemove);
+  };
+
+  // Toggle between modes based on the current theme
+  const toggleMode = () => {
+    const body = document.body;
+
+    if (body.classList.contains('dark')) {
+      // dark to light
+      toggleTheme('dark', 'light', {
+        iconAdd: ['fa-moon', 'bg-black', 'tx-white'],
+        iconRemove: ['fa-sun', 'bg-white', 'tx-black'],
+        linkAdd: ['tx-black'], linkRemove: ['tx-white'],
+        tweetBoxAdd: ['tx-white'], tweetBoxRemove: ['tx-black'],
+        terminalAdd: [], terminalRemove: ['tx-white']
+      });
+    } else if (body.classList.contains('dark-brown')) {
+      // dark brown to light brown
+      toggleTheme('dark-brown', 'light-brown', {
+        iconAdd: ['fa-moon', 'bg-h-aa7d52', 'tx-white'],
+        iconRemove: ['fa-sun', 'bg-h-653f15'],
+        linkAdd: ['tx-black'], linkRemove: ['tx-white'],
+        tweetBoxAdd: ['tx-white'], tweetBoxRemove: ['tx-black'],
+        terminalAdd: [], terminalRemove: ['tx-white']
+      });
+    } else if (body.classList.contains('light-brown')) {
+      // light brown to dark brown
+      toggleTheme('light-brown', 'dark-brown', {
+        iconAdd: ['fa-sun', 'bg-h-653f15', 'tx-white'],
+        iconRemove: ['fa-moon', 'bg-h-aa7d52'],
+        linkAdd: ['tx-white'], linkRemove: ['tx-black'],
+        tweetBoxAdd: ['tx-white'], tweetBoxRemove: [],
+        terminalAdd: ['tx-white'], terminalRemove: []
+      });
+    } else if (body.classList.contains('dark-violet')) {
+      // dark violet to light violet
+      toggleTheme('dark-violet', 'light-violet', {
+        iconAdd: ['fa-moon', 'bg-h-8d52aa', 'tx-white'],
+        iconRemove: ['fa-sun', 'bg-white', 'tx-black'],
+        linkAdd: ['tx-black'], linkRemove: ['tx-white'],
+        tweetBoxAdd: ['tx-white'], tweetBoxRemove: ['tx-black'],
+        terminalAdd: [], terminalRemove: ['tx-white']
+      });
+    } else if (body.classList.contains('light-violet')) {
+      //light violet to dark violet
+      toggleTheme('light-violet', 'dark-violet', {
+        iconAdd: ['fa-sun', 'bg-h-4c0e65', 'tx-black'],
+        iconRemove: ['fa-moon', 'bg-h-8d52aa'],
+        linkAdd: ['tx-white'], linkRemove: ['tx-black'],
+        tweetBoxAdd: ['tx-white'], tweetBoxRemove: [],
+        terminalAdd: ['tx-white'], terminalRemove: []
+      });
+    } else if (body.classList.contains('dark-pink')) {
+      // dark pink to light pink
+      toggleTheme('dark-pink', 'light-pink', {
+        iconAdd: ['fa-moon', 'bg-h-aa5275', 'tx-white'],
+        iconRemove: ['fa-sun', 'bg-h-43091d', 'tx-black'],
+        linkAdd: ['tx-black'], linkRemove: ['tx-white'],
+        tweetBoxAdd: ['tx-white'], tweetBoxRemove: ['tx-black'],
+        terminalAdd: [], terminalRemove: ['tx-white']
+      });
+    } else if (body.classList.contains('light-pink')) {
+        // light pink to dark pink
+        toggleTheme('light-pink', 'dark-pink', {
+          iconAdd: ['fa-sun', 'bg-h-43091d', 'tx-black'],
+          iconRemove: ['fa-moon', 'bg-h-aa5275'],
+          linkAdd: ['tx-white'], linkRemove: ['tx-black'],
+          tweetBoxAdd: ['tx-white'], tweetBoxRemove: [],
+          terminalAdd: ['tx-white'], terminalRemove: []
+        });
+    } else if (body.classList.contains('dark-blue')) {
+      // dark blue to light blue
+      toggleTheme('dark-blue', 'light-blue', {
+        iconAdd: ['fa-moon', 'bg-h-5290aa', 'tx-white'],
+        iconRemove: ['fa-sun', 'bg-h-03131d', 'tx-black'],
+        linkAdd: ['tx-black'], linkRemove: ['tx-white'],
+        tweetBoxAdd: ['tx-white'], tweetBoxRemove: ['tx-black'],
+        terminalAdd: [], terminalRemove: ['tx-white']
+      });
+    } else if (body.classList.contains('light-blue')) {
+        // light blue to dark blue
+        toggleTheme('light-blue', 'dark-blue', {
+          iconAdd: ['fa-sun', 'bg-h-03131d', 'tx-black'],
+          iconRemove: ['fa-moon', 'bg-h-5290aa'],
+          linkAdd: ['tx-white'], linkRemove: ['tx-black'],
+          tweetBoxAdd: ['tx-white'], tweetBoxRemove: [],
+          terminalAdd: ['tx-white'], terminalRemove: []
+        });
+    } else if (body.classList.contains('dark-green')) {
+      // dark green to light green
+      toggleTheme('dark-green', 'light-green', {
+        iconAdd: ['fa-moon', 'bg-h-84aa52', 'tx-white'],
+        iconRemove: ['fa-sun', 'bg-h-2b650e', 'tx-black'],
+        linkAdd: ['tx-black'], linkRemove: ['tx-white'],
+        tweetBoxAdd: ['tx-white'], tweetBoxRemove: ['tx-black'],
+        terminalAdd: [], terminalRemove: ['tx-white']
+      });
+    } else if (body.classList.contains('light-green')) {
+      // light green to dark green
+        toggleTheme('light-green', 'dark-green', {
+          iconAdd: ['fa-sun', 'bg-h-2b650e', 'tx-black'],
+          iconRemove: ['fa-moon', 'bg-h-84aa52'],
+          linkAdd: ['tx-white'], linkRemove: ['tx-black'],
+          tweetBoxAdd: ['tx-white'], tweetBoxRemove: [],
+          terminalAdd: ['tx-white'], terminalRemove: []
+        });
+    } else {
+      //light to dark
+      toggleTheme('light', 'dark', {
+        iconAdd: ['fa-sun', 'bg-white', 'tx-black'],
+        iconRemove: ['fa-moon', 'bg-black', 'tx-white'],
+        linkAdd: ['tx-white'], linkRemove: ['tx-black'],
+        tweetBoxAdd: ['tx-black'], tweetBoxRemove: ['tx-white'],
+        terminalAdd: ['tx-white'], terminalRemove: []
+      });
+    }
+  };
+
+
+  // Toggle Brown Theme
+  const toggleBrown = () => {
+    const body = document.body;
+    const icon = document.getElementById('modeIcon');
+
+    // Remove all background color classes from the icon before applying new ones
+    icon.classList.remove('bg-h-8d52aa');
+    
+
+    if (body.classList.contains('dark')) {
+      toggleClasses(body, ['dark-brown'], ['dark']);
+      toggleClasses(icon, ['bg-h-653f15', 'tx-white'], ['bg-white', 'tx-black']);
+    } else if(body.classList.contains('light'))  {
+      toggleClasses(body, ['light-brown'], ['light']);
+      toggleClasses(icon, ['bg-h-aa7d52'], ['bg-black']);
+    } else if (body.classList.contains('dark-violet')) {
+      toggleClasses(body, ['dark-brown'], ['dark-violet']);
+      toggleClasses(icon, ['bg-h-653f15'], ['bg-h-8d52aa', 'bg-h-4c0e65']);
+    } else if (body.classList.contains('light-violet')) {
+      toggleClasses(body, ['light-brown'], ['light-violet']);
+      toggleClasses(icon, ['bg-h-aa7d52'], ['bg-h-4c0e65', 'bg-h-8d52aa']);
+    } else if (body.classList.contains('dark-pink')) {
+      toggleClasses(body, ['dark-brown'], ['dark-pink']);
+      toggleClasses(icon, ['bg-h-653f15'], ['bg-h-43091d']);
+    } else if (body.classList.contains('light-pink')) {
+      toggleClasses(body, ['light-brown'], ['light-pink']);
+      toggleClasses(icon, ['bg-h-aa7d52'], ['bg-h-aa5275']);
+    } else if(body.classList.contains('dark-blue')) {
+      toggleClasses(body, ['dark-brown'], ['dark-blue'])
+      toggleClasses(icon, ['bg-h-653f15'], ['bg-h-03131d']);
+    } else if (body.classList.contains('light-blue')) {
+      toggleClasses(body, ['light-brown'], ['light-blue'])
+      toggleClasses(icon, ['bg-h-aa7d52'], ['bg-h-5290aa']);
+    } else if(body.classList.contains('dark-green')) {
+      toggleClasses(body, ['dark-brown'], ['dark-green']);
+      toggleClasses(icon, ['bg-h-653f15'], ['bg-h-2b650e']);
+    } else if(body.classList.contains('light-green')) {
+      toggleClasses(body, ['light-brown'], ['light-green']);
+      toggleClasses(icon, ['bg-h-aa7d52'], ['bg-h-84aa52']);      
+    } 
+  };
+
+  // Toggle Violet Theme
+  const toggleViolet = () => {
+    const body = document.body;
+    const icon = document.getElementById('modeIcon');
+
+    if (body.classList.contains('dark')) {
+      toggleClasses(body, ['dark-violet'], ['dark']);
+      toggleClasses(icon, ['bg-h-8d52aa', 'tx-white'], ['bg-white', 'tx-black']);
+    } else if(body.classList.contains('light')) {
+      toggleClasses(body, ['light-violet'], ['light']);
+      toggleClasses(icon, ['bg-h-4c0e65'], ['bg-black']);
+    } else if (body.classList.contains('dark-brown')) {
+      toggleClasses(body, ['dark-violet'], ['dark-brown']);
+      toggleClasses(icon, ['bg-h-8d52aa'], ['bg-h-653f15']);
+    } else if (body.classList.contains('light-brown')) {
+      toggleClasses(body, ['light-violet'], ['light-brown']);
+      toggleClasses(icon, ['bg-h-4c0e65'], ['bg-h-aa7d52']);
+    } else if (body.classList.contains('dark-pink')) {
+      toggleClasses(body, ['dark-violet'], ['dark-pink']);
+      toggleClasses(icon, ['bg-h-4c0e65'], ['bg-h-43091d']);
+    } else if(body.classList.contains('light-pink')) {
+      toggleClasses(body, ['light-violet'], ['light-pink']);
+      toggleClasses(icon, ['bg-h-4c0e65'], ['bg-h-aa5275']);
+    } else if (body.classList.contains('dark-blue')) {
+      toggleClasses(body, ['dark-violet'], ['dark-blue'])
+      toggleClasses(icon, ['bg-h-8d52aa'], ['bg-h-03131d']);
+    } else if (body.classList.contains('light-blue')) {
+      toggleClasses(body, ['light-violet'], ['light-blue'])
+      toggleClasses(icon, ['bg-h-4c0e65'], ['bg-h-5290aa']);
+    } else if(body.classList.contains('dark-green')) {
+      toggleClasses(body, ['dark-violet'], ['dark-green']);
+      toggleClasses(icon, ['bg-h-8d52aa'], ['bg-h-2b650e']);
+    } else if(body.classList.contains('light-green')) {
+      toggleClasses(body, ['light-violet'], ['light-green']);
+      toggleClasses(icon, ['bg-h-4c0e65'], ['bg-h-84aa52']);   
+    } 
+  };
+
+  // Toggle Pink Theme
+  const togglePink = () => {
+    const body = document.body;
+    const icon = document.getElementById('modeIcon');
+
+    if (body.classList.contains('dark')) {
+      toggleClasses(body, ['dark-pink'], ['dark']);
+      toggleClasses(icon, ['bg-h-43091d', 'tx-white'], ['bg-white', 'tx-black']);
+    }  else if(body.classList.contains('light'))  {
+      toggleClasses(body, ['light-pink'], ['light']);
+      toggleClasses(icon, ['bg-h-aa5275'], ['bg-black']); 
+    } else if (body.classList.contains('dark-violet')) {
+      toggleClasses(body, ['dark-pink'], ['dark-violet']);
+      toggleClasses(icon, ['bg-h-43091d'], ['bg-h-4c0e65']);
+    } else if (body.classList.contains('dark-brown')) {
+      toggleClasses(body, ['dark-pink'], ['dark-brown']);
+      toggleClasses(icon, ['bg-h-43091d'], ['bg-h-653f15']);
+    } else if(body.classList.contains('light-violet')) {
+      toggleClasses(body, ['light-pink'], ['light-violet']);
+      toggleClasses(icon, ['bg-h-aa5275'], ['bg-h-4c0e65']);
+    } else if (body.classList.contains('light-brown')) {
+      toggleClasses(body, ['light-pink'], ['light-brown']);
+      toggleClasses(icon, ['bg-h-aa5275'], ['bg-h-aa7d52']);
+    } else if (body.classList.contains('dark-blue')) {
+      toggleClasses(body, ['dark-pink'], ['dark-blue']);
+      toggleClasses(icon, ['bg-h-43091d'], ['bg-h-03131d']);
+    } else if (body.classList.contains('light-blue')){
+      toggleClasses(body, ['light-pink'], ['light-blue'])
+      toggleClasses(icon, ['bg-h-aa5275'], ['bg-h-5290aa']);
+    } else if(body.classList.contains('dark-green')) {
+      toggleClasses(body, ['dark-pink'], ['dark-green']);
+      toggleClasses(icon, ['bg-h-43091d'], ['bg-h-2b650e']);
+    } else if(body.classList.contains('light-green')) {
+      toggleClasses(body, ['light-pink'], ['light-green']);
+      toggleClasses(icon, ['bg-h-aa5275'], ['bg-h-84aa52']);   
+    } 
+
+
+  };
+
+  // Toggle Blue Theme
+  const toggleBlue = () => {
+    const body = document.body;
+    const icon = document.getElementById('modeIcon');
+
+    if (body.classList.contains('dark')) {
+      toggleClasses(body, ['dark-blue'], ['dark']);
+      toggleClasses(icon, ['bg-h-03131d', 'tx-white'], ['bg-white', 'tx-black']);
+    } else if(body.classList.contains('light'))  {
+      toggleClasses(body, ['light-blue'], ['light']);
+      toggleClasses(icon, ['bg-h-5290aa', 'tx-white']);
+    } else if (body.classList.contains('dark-pink')) {
+      toggleClasses(body, ['dark-blue'], ['dark-pink']);
+      toggleClasses(icon, ['bg-h-03131d'], ['bg-h-43091d']);
+    } else if (body.classList.contains('light-pink')) {
+      toggleClasses(body, ['light-blue'], ['light-pink'])
+      toggleClasses(icon, ['bg-h-5290aa'], ['bg-h-aa5275']);
+    } else if (body.classList.contains('dark-violet')) {
+      toggleClasses(body, ['dark-blue'], ['dark-violet'])
+      toggleClasses(icon, ['bg-h-03131d'], ['bg-h-8d52aa']);
+    } else if (body.classList.contains('light-violet')) {
+      toggleClasses(body, ['light-blue'], ['light-violet'])
+      toggleClasses(icon, ['bg-h-5290aa'], ['bg-h-4c0e65']);
+    } else if (body.classList.contains('dark-brown')) {
+      toggleClasses(body, ['dark-blue'], ['dark-brown'])
+      toggleClasses(icon, ['bg-h-03131d'], ['bg-h-653f15']);
+    } else if (body.classList.contains('light-brown')) {
+      toggleClasses(body, ['light-blue'], ['light-brown'])
+      toggleClasses(icon, ['bg-h-5290aa'], ['bg-h-aa7d52']);
+    } else if(body.classList.contains('dark-green')) {
+      toggleClasses(body, ['dark-blue'], ['dark-green']);
+      toggleClasses(icon, ['bg-h-03131d'], ['bg-h-2b650e']);
+    } else if(body.classList.contains('light-green')) {
+      toggleClasses(body, ['light-blue'], ['light-green']);
+      toggleClasses(icon, ['bg-h-5290aa'], ['bg-h-84aa52']);   
+    } 
+  };
+
+  // Toggle Green Theme
+  const toggleGreen = () => {
+    const body = document.body;
+    const icon = document.getElementById('modeIcon');
+
+    if(body.classList.contains('dark')) {
+      toggleClasses(body, ['dark-green'], ['dark']);
+      toggleClasses(icon, ['bg-h-2b650e', 'tx-white'], ['bg-white', 'tx-black']);
+    } else if(body.classList.contains('light')) {
+      toggleClasses(body, ['light-green'], ['light']);
+      toggleClasses(icon, ['bg-h-84aa52', 'tx-white'], ['bg-black']);
+    } else if(body.classList.contains('dark-blue')) {
+      toggleClasses(body, ['dark-green'], ['dark-blue']);
+      toggleClasses(icon, ['bg-h-2b650e'], ['bg-h-03131d']);
+    } else if(body.classList.contains('light-blue')) {
+      toggleClasses(body, ['light-green'], ['light-blue']);
+      toggleClasses(icon, ['bg-h-84aa52'], ['bg-h-5290aa']);   
+    } else if(body.classList.contains('dark-pink')) {
+      toggleClasses(body, ['dark-green'], ['dark-pink']);
+      toggleClasses(icon, ['bg-h-2b650e'], ['bg-h-43091d']);
+    } else if(body.classList.contains('light-pink')) {
+      toggleClasses(body, ['light-green'], ['light-pink']);
+      toggleClasses(icon, ['bg-h-84aa52'], ['bg-h-aa5275']);   
+    } else if(body.classList.contains('dark-violet')) {
+      toggleClasses(body, ['dark-green'], ['dark-violet']);
+      toggleClasses(icon, ['bg-h-2b650e'], ['bg-h-8d52aa']);
+    } else if(body.classList.contains('light-violet')) {
+      toggleClasses(body, ['light-green'], ['light-violet']);
+      toggleClasses(icon, ['bg-h-84aa52'], ['bg-h-4c0e65']);   
+    } else if(body.classList.contains('dark-brown')) {
+      toggleClasses(body, ['dark-green'], ['dark-brown']);
+      toggleClasses(icon, ['bg-h-2b650e'], ['bg-h-653f15']);
+    } else if(body.classList.contains('light-brown')) {
+      toggleClasses(body, ['light-green'], ['light-brown']);
+      toggleClasses(icon, ['bg-h-84aa52'], ['bg-h-aa7d52']);      
+    };
+
+
+  };
+
 </script>
 <html>
   <html-head />

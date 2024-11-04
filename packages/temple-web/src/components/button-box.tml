@@ -1,0 +1,25 @@
+
+<style>
+    ::slotted(button) {
+        padding: 13px 12px;
+        border-radius: 4px;
+        outline: none;
+        border: none;
+        width: 270px;
+        background: blue;
+        color: white;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+        import { props, children } from '@ossph/temple';
+        const { name, shadow } = props();
+</script>
+
+<template class='button-box' type='light'>
+    <button>{name}</button>
+</template>
+<template type='shadow'>
+    <slot></slot>
+</template>

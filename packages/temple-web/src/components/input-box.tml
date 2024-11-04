@@ -1,0 +1,25 @@
+
+<style>
+     ::slotted(input) {
+        padding: 13px 12px;
+        border-radius: 4px;
+        outline: none;
+        border: none;
+        width: 246px;
+      }
+
+
+</style>
+<script>
+  import { props, children } from '@ossph/temple';
+  const { type, placeholder, shadow } = props();
+
+</script>
+
+<template class="input-box" type='light'>
+  <input type={type} placeholder={placeholder}/>
+</template>
+
+<template type='shadow'>
+  <slot></slot>
+</template>
