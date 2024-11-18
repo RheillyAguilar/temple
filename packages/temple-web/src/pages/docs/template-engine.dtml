@@ -27,6 +27,609 @@
   const toggle = () => {
     document.getElementsByTagName('panel-layout')[0].toggle('left');
   };
+
+  // Configuration for Theme 
+    const themeMap = {
+        // Light Theme
+        dark: { nextTheme: 'light', options: { iconAdd: ['fa-moon', 'bg-black', 'tx-white'], iconRemove: ['fa-sun', 'bg-white', 'tx-black'], linkAdd: ['tx-black'], linkRemove: ['tx-white'], tweetBoxAdd: ['tx-white'], tweetBoxRemove: ['tx-black'], terminalAdd: ['tx-white'], terminalRemove: ['tx-black'] }},
+        // Light-Violet Theme
+        'dark-violet': { nextTheme: 'light-violet', options: { iconAdd: ['fa-moon', 'bg-h-8d52aa', 'tx-white'], iconRemove: ['fa-sun', 'bg-white', 'tx-black'], linkAdd: ['tx-black'], linkRemove: ['tx-white'], tweetBoxAdd: ['tx-white'], tweetBoxRemove: ['tx-black'], terminalAdd: [], terminalRemove: ['tx-white'] }},
+        // Dark-Violet Theme
+        'light-violet': { nextTheme: 'dark-violet', options: { iconAdd: ['fa-sun', 'bg-h-4c0e65', 'tx-black'], iconRemove: ['fa-moon', 'bg-h-8d52aa'], linkAdd: ['tx-white'], linkRemove: ['tx-black'], tweetBoxAdd: ['tx-white'], tweetBoxRemove: [], terminalAdd: ['tx-white'], terminalRemove: [] }},
+        // Light-Pink Theme
+        'dark-pink': { nextTheme: 'light-pink', options: { iconAdd: ['fa-moon', 'bg-h-aa5275', 'tx-white'], iconRemove: ['fa-sun', 'bg-h-43091d', 'tx-black'], linkAdd: ['tx-black'], linkRemove: ['tx-white'], tweetBoxAdd: ['tx-white'], tweetBoxRemove: ['tx-black'], terminalAdd: [], terminalRemove: ['tx-white'] }},
+        // Dark-Pink Theme
+        'light-pink': { nextTheme: 'dark-pink', options: { iconAdd: ['fa-sun', 'bg-h-43091d', 'tx-black'], iconRemove: ['fa-moon', 'bg-h-aa5275'], linkAdd: ['tx-white'], linkRemove: ['tx-black'], tweetBoxAdd: ['tx-white'], tweetBoxRemove: [], terminalAdd: ['tx-white'], terminalRemove: [] }},
+        // Light-Blue Theme
+        'dark-blue': { nextTheme: 'light-blue', options: { iconAdd: ['fa-moon', 'bg-h-5290aa', 'tx-white'], iconRemove: ['fa-sun', 'bg-h-03131d', 'tx-black'], linkAdd: ['tx-black'], linkRemove: ['tx-white'], tweetBoxAdd: ['tx-white'], tweetBoxRemove: ['tx-black'], terminalAdd: [], terminalRemove: ['tx-white'] }},
+        // Dark-Blue Theme
+        'light-blue': { nextTheme: 'dark-blue', options: { iconAdd: ['fa-sun', 'bg-h-03131d', 'tx-black'], iconRemove: ['fa-moon', 'bg-h-5290aa'], linkAdd: ['tx-white'], linkRemove: ['tx-black'], tweetBoxAdd: ['tx-white'], tweetBoxRemove: [], terminalAdd: ['tx-white'], terminalRemove: [] }},
+        // Light-Green Theme
+        'dark-green': { nextTheme: 'light-green', options: { iconAdd: ['fa-moon', 'bg-h-84aa52', 'tx-white'], iconRemove: ['fa-sun', 'bg-h-2b650e', 'tx-black'], linkAdd: ['tx-black'], linkRemove: ['tx-white'], tweetBoxAdd: ['tx-white'], tweetBoxRemove: ['tx-black'], terminalAdd: [], terminalRemove: ['tx-white'] }},
+        // Dark-Green The,e
+        'light-green': { nextTheme: 'dark-green', options: { iconAdd: ['fa-sun', 'bg-h-2b650e', 'tx-black'], iconRemove: ['fa-moon', 'bg-h-84aa52'], linkAdd: ['tx-white'], linkRemove: ['tx-black'], tweetBoxAdd: ['tx-white'], tweetBoxRemove: [], terminalAdd: ['tx-white'], terminalRemove: [] }},
+        // Dark Theme
+        light: { nextTheme: 'dark', options: { iconAdd: ['fa-sun', 'bg-white', 'tx-black'], iconRemove: ['fa-moon', 'bg-black', 'tx-white'], linkAdd: ['tx-white'], linkRemove: ['tx-black'], tweetBoxAdd: ['tx-black'], tweetBoxRemove: ['tx-white'], terminalAdd: ['tx-black'], terminalRemove: ['tx-white'] }}
+    };
+
+    // Helper function to toggle classes
+    const toggleClasses = (element, addClasses, removeClasses) => {
+        if (element) {
+          element.classList.add(...addClasses);
+          element.classList.remove(...removeClasses);
+        }
+    };
+        
+
+    // Apply the saved theme from localStorage
+    const savedTheme = () => {
+        const savedTheme = localStorage.getItem('theme');
+        const icon = document.getElementById('modeIcon');
+        const tweetBoxes = document.querySelectorAll('tweet-box');
+        const textLinks = document.querySelectorAll('a');
+        const terminals = document.querySelectorAll('ide-code');
+
+        
+        if (savedTheme) {
+          // Reset all theme classes on the body
+          const themeClasses = [
+            'dark', 'light', 
+            'dark-violet', 'light-violet', 'dark-pink', 'light-pink', 
+            'dark-blue', 'light-blue', 'dark-green', 'light-green'
+          ];
+          themeClasses.forEach(themeClass => document.body.classList.remove(themeClass));
+          // Apply the saved theme to the body
+          document.body.classList.add(savedTheme);
+
+          // Apply classes based on the saved theme
+          if (savedTheme === 'dark-violet') {
+            toggleClasses(icon, ['bg-h-8d52aa', 'tx-white'], ['bg-white', 'tx-black']);
+          } else if (savedTheme === 'light-violet') {
+            toggleClasses(icon, ['fa-moon', 'bg-h-4c0e65', 'tx-white'], ['fa-sun', 'bg-white', 'tx-black']);
+            tweetBoxes.forEach(tweetBox => toggleClasses(tweetBox,  ['tx-white'], ['tx-black']));
+            textLinks.forEach(link => toggleClasses(link, ['tx-black'], ['tx-white']));
+            terminals.forEach(terminal => toggleClasses(terminal, ['tx-white'], ['tx-black']));
+          } else if (savedTheme === 'dark-pink') { 
+            toggleClasses(icon, ['bg-h-43091d', 'tx-white'], ['bg-white', 'tx-black']);
+          } else if (savedTheme === 'light-pink') {
+            toggleClasses(icon, ['fa-moon', 'bg-h-aa5275', 'tx-white'], ['fa-sun', 'bg-white', 'tx-black']);
+            tweetBoxes.forEach(tweetBox => toggleClasses(tweetBox,  ['tx-white'], ['tx-black']));
+            textLinks.forEach(link => toggleClasses(link, ['tx-black'], ['tx-white']));
+            terminals.forEach(terminal => toggleClasses(terminal, ['tx-white'], ['tx-black']));
+          } else if (savedTheme === 'dark-blue') { 
+            toggleClasses(icon, ['bg-h-03131d', 'tx-white'], ['bg-white', 'tx-black']);
+          } else if (savedTheme === 'light-blue') {
+            toggleClasses(icon, ['fa-moon', 'bg-h-5290aa', 'tx-white'], ['fa-sun', 'bg-white', 'tx-black']);
+            tweetBoxes.forEach(tweetBox => toggleClasses(tweetBox,  ['tx-white'], ['tx-black']));
+            textLinks.forEach(link => toggleClasses(link, ['tx-black'], ['tx-white']));
+            terminals.forEach(terminal => toggleClasses(terminal, ['tx-white'], ['tx-black']));
+          } else if (savedTheme === 'dark-green') { 
+            toggleClasses(icon, ['bg-h-2b650e', 'tx-white'], ['bg-white', 'tx-black']);
+          } else if (savedTheme === 'light-green') {
+            toggleClasses(icon, ['fa-moon', 'bg-h-84aa52', 'tx-white'], ['fa-sun', 'bg-white', 'tx-black']);
+            tweetBoxes.forEach(tweetBox => toggleClasses(tweetBox,  ['tx-white'], ['tx-black']));
+            textLinks.forEach(link => toggleClasses(link, ['tx-black'], ['tx-white']));
+            terminals.forEach(terminal => toggleClasses(terminal, ['tx-white'], ['tx-black']));
+          } else if (savedTheme === 'light') {
+            toggleClasses(icon, ['fa-moon', 'bg-black', 'tx-white'], ['fa-sun', 'bg-white', 'tx-black']);
+            tweetBoxes.forEach(tweetBox => toggleClasses(tweetBox,  ['tx-white'], ['tx-black']));
+            textLinks.forEach(link => toggleClasses(link, ['tx-black'], ['tx-white']));
+            terminals.forEach(terminal => toggleClasses(terminal, ['tx-white'], ['tx-black']));
+          }
+        }
+    };
+
+
+    // General function to toggle theme modes
+    const toggleTheme = (fromClass, toClass, iconConfig) => {
+        const body = document.body;
+        const icon = document.getElementById('modeIcon');
+        const textA = document.querySelectorAll('a');
+        const tweetBoxes = document.querySelectorAll('tweet-box');
+        const terminals = document.querySelectorAll('ide-code');
+
+        body.classList.replace(fromClass, toClass);
+        textA.forEach(link => toggleClasses(link, iconConfig.linkAdd, iconConfig.linkRemove));
+        tweetBoxes.forEach(tweetBox => toggleClasses(tweetBox, iconConfig.tweetBoxAdd, iconConfig.tweetBoxRemove));
+        terminals.forEach(terminal => toggleClasses(terminal, iconConfig.terminalAdd, iconConfig.terminalRemove));
+        toggleClasses(icon, iconConfig.iconAdd, iconConfig.iconRemove);
+        localStorage.setItem('theme', toClass);
+    };
+
+
+    // Toggle Mode for Dark and Light Mode
+    const toggleMode = () => {
+        const body = document.body;
+        const currentTheme = Object.keys(themeMap).find(theme => body.classList.contains(theme));
+        if (currentTheme) {
+          const { nextTheme, options } = themeMap[currentTheme];
+          toggleTheme(currentTheme, nextTheme, options);
+        }
+    };
+
+
+    // Toggle Violet Theme
+    const toggleViolet = () => {
+        const body = document.body;
+        if (body.classList.contains('dark')) {
+          toggleTheme('dark', 'dark-violet', {
+            iconAdd: ['bg-h-8d52aa', 'tx-white'],  
+            iconRemove: ['bg-white', 'tx-black'],  
+            linkAdd: ['tx-white'],
+            linkRemove: ['tx-dark'],
+            tweetBoxAdd: ['bg-violet-light'],
+            tweetBoxRemove: ['bg-dark'],
+            terminalAdd: ['bg-terminal-violet'],
+            terminalRemove: ['bg-terminal-dark']
+          });
+        } else if (body.classList.contains('light')) {
+          toggleTheme('light', 'light-violet', {
+            iconAdd: ['bg-h-4c0e65'],  
+            iconRemove: ['bg-black'],
+            linkAdd: ['tx-black'],
+            linkRemove: ['text-white'],
+            tweetBoxAdd: ['tx-white'],
+            tweetBoxRemove: ['tx-black'],
+            terminalAdd: ['bg-terminal-violet-light'],
+            terminalRemove: ['bg-terminal-light']
+          });
+        } else if (body.classList.contains('dark-pink')) {
+          toggleTheme('dark-pink', 'dark-violet', {
+            iconAdd: ['bg-h-4c0e65'],
+            iconRemove: ['bg-h-43091d'],
+            linkAdd: ['text-violet-dark'],
+            linkRemove: ['text-pink-dark'],
+            tweetBoxAdd: ['bg-violet-dark'],
+            tweetBoxRemove: ['bg-pink-dark'],
+            terminalAdd: ['bg-terminal-violet-dark'],
+            terminalRemove: ['bg-terminal-pink-dark']
+          });
+        } else if (body.classList.contains('light-pink')) {
+          toggleTheme('light-pink', 'light-violet', {
+            iconAdd: ['bg-h-4c0e65'],
+            iconRemove: ['bg-h-aa5275'],
+            linkAdd: ['text-violet-light'],
+            linkRemove: ['text-pink-light'],
+            tweetBoxAdd: ['bg-violet-light'],
+            tweetBoxRemove: ['bg-pink-light'],
+            terminalAdd: ['bg-terminal-violet-light'],
+            terminalRemove: ['bg-terminal-pink-light']
+          });
+        } else if (body.classList.contains('dark-blue')) {
+          toggleTheme('dark-blue', 'dark-violet', {
+            iconAdd: ['bg-h-8d52aa'],
+            iconRemove: ['bg-h-03131d'],
+            linkAdd: ['text-violet'],
+            linkRemove: ['text-dark'],
+            tweetBoxAdd: ['bg-violet-light'],
+            tweetBoxRemove: ['bg-dark'],
+            terminalAdd: ['bg-terminal-violet'],
+            terminalRemove: ['bg-terminal-dark']
+          });
+        } else if (body.classList.contains('light-blue')) {
+          toggleTheme('light-blue', 'light-violet', {
+            iconAdd: ['bg-h-4c0e65'],
+            iconRemove:  ['bg-h-5290aa'],
+            linkAdd: ['text-violet-light'],
+            linkRemove: ['text-dark'],
+            tweetBoxAdd: ['bg-violet-light'],
+            tweetBoxRemove: ['bg-light'],
+            terminalAdd: ['bg-terminal-violet-light'],
+            terminalRemove: ['bg-terminal-light']
+          });
+        } else if (body.classList.contains('dark-green')) {
+          toggleTheme('dark-green', 'dark-violet', {
+            iconAdd: ['bg-h-8d52aa', 'tx-white'],
+            iconRemove: ['bg-h-2b650e', 'tx-black'],
+            linkAdd: ['text-violet-dark'],
+            linkRemove: ['text-pink-dark'],
+            tweetBoxAdd: ['bg-violet-dark'],
+            tweetBoxRemove: ['bg-pink-dark'],
+            terminalAdd: ['bg-terminal-violet-dark'],
+            terminalRemove: ['bg-terminal-pink-dark']
+          });
+        } else if (body.classList.contains('light-green')) {
+          toggleTheme('light-green', 'light-violet', {
+            iconAdd: ['bg-h-4c0e65', 'tx-white'],
+            iconRemove: ['bg-h-84aa52', 'tx-black'],
+            linkAdd: ['text-violet-dark'],
+            linkRemove: ['text-pink-dark'],
+            tweetBoxAdd: ['bg-violet-dark'],
+            tweetBoxRemove: ['bg-pink-dark'],
+            terminalAdd: ['bg-terminal-violet-dark'],
+            terminalRemove: ['bg-terminal-pink-dark']
+          });
+        }
+    };
+      
+    // Toggle Pink Theme
+    const togglePink = () => {
+        const body = document.body;
+        if (body.classList.contains('dark')) {
+          toggleTheme('dark', 'dark-pink', {
+            iconAdd: ['bg-h-43091d', 'tx-white'],
+            iconRemove: ['bg-white', 'tx-black'],
+            linkAdd: ['text-pink'],
+            linkRemove: ['text-dark'],
+            tweetBoxAdd: ['bg-pink-dark'],
+            tweetBoxRemove: ['bg-dark'],
+            terminalAdd: ['bg-terminal-pink-dark'],
+            terminalRemove: ['bg-terminal-dark']
+          });
+        } else if (body.classList.contains('light')) {
+          toggleTheme('light', 'light-pink', {
+            iconAdd: ['bg-h-aa5275'],
+            iconRemove: ['bg-black'],
+            linkAdd: ['text-pink-light'],
+            linkRemove: ['text-light'],
+            tweetBoxAdd: ['bg-pink-light'],
+            tweetBoxRemove: ['bg-light'],
+            terminalAdd: ['bg-terminal-pink-light'],
+            terminalRemove: ['bg-terminal-light']
+          });
+        } else if (body.classList.contains('dark-violet')) {
+          toggleTheme('dark-violet', 'dark-pink', {
+            iconAdd: ['bg-h-43091d'],
+            iconRemove: ['bg-h-4c0e65'],
+            linkAdd: ['text-pink-dark'],
+            linkRemove: ['text-violet-dark'],
+            tweetBoxAdd: ['bg-pink-dark'],
+            tweetBoxRemove: ['bg-violet-dark'],
+            terminalAdd: ['bg-terminal-pink-dark'],
+            terminalRemove: ['bg-terminal-violet-dark']
+          });
+        } else if (body.classList.contains('light-violet')) {
+          toggleTheme('light-violet', 'light-pink', {
+            iconAdd: ['bg-h-aa5275'],
+            iconRemove: ['bg-h-4c0e65'],
+            linkAdd: ['text-pink-light'],
+            linkRemove: ['text-violet-light'],
+            tweetBoxAdd: ['bg-pink-light'],
+            tweetBoxRemove: ['bg-violet-light'],
+            terminalAdd: ['bg-terminal-pink-light'],
+            terminalRemove: ['bg-terminal-violet-light']
+          });
+        } else if (body.classList.contains('dark-blue')) {
+          toggleTheme('dark-blue', 'dark-pink', {
+            iconAdd: ['bg-h-43091d'],
+            iconRemove: ['bg-h-03131d'],
+            linkAdd: ['text-pink-dark'],
+            linkRemove: ['text-blue-dark'],
+            tweetBoxAdd: ['bg-pink-dark'],
+            tweetBoxRemove: ['bg-blue-dark'],
+            terminalAdd: ['bg-terminal-pink-dark'],
+            terminalRemove: ['bg-terminal-blue-dark']
+          });
+        } else if (body.classList.contains('light-blue')) {
+          toggleTheme('light-blue', 'light-pink', {
+            iconAdd: ['bg-h-aa5275'],
+            iconRemove: ['bg-h-5290aa'],
+            linkAdd: ['text-pink-light'],
+            linkRemove: ['text-blue-light'],
+            tweetBoxAdd: ['bg-pink-light'],
+            tweetBoxRemove: ['bg-blue-light'],
+            terminalAdd: ['bg-terminal-pink-light'],
+            terminalRemove: ['bg-terminal-blue-light']
+          });
+        } else if (body.classList.contains('dark-green')) {
+          toggleTheme('dark-green', 'dark-pink', {
+            iconAdd: ['bg-h-43091d'],
+            iconRemove: ['bg-h-2b650e'],
+            linkAdd: ['text-pink-dark'],
+            linkRemove: ['text-green-dark'],
+            tweetBoxAdd: ['bg-pink-dark'],
+            tweetBoxRemove: ['bg-green-dark'],
+            terminalAdd: ['bg-terminal-pink-dark'],
+            terminalRemove: ['bg-terminal-green-dark']
+          });
+        } else if (body.classList.contains('light-green')) {
+          toggleTheme('light-green', 'light-pink', {
+            iconAdd: ['bg-h-aa5275'],
+            iconRemove: ['bg-h-84aa52'],
+            linkAdd: ['text-pink-light'],
+            linkRemove: ['text-green-light'],
+            tweetBoxAdd: ['bg-pink-light'],
+            tweetBoxRemove: ['bg-green-light'],
+            terminalAdd: ['bg-terminal-pink-light'],
+            terminalRemove: ['bg-terminal-green-light']
+          });
+        }
+    };
+
+    // Toggle Blue Theme
+    const toggleBlue = () => {
+        const body = document.body;
+
+        if (body.classList.contains('dark')) {
+          toggleTheme('dark', 'dark-blue', {
+            iconAdd: ['bg-h-03131d', 'tx-white'],
+            iconRemove: ['bg-white', 'tx-black'],
+            linkAdd: ['text-blue-dark'],
+            linkRemove: ['text-dark'],
+            tweetBoxAdd: ['bg-blue-dark'],
+            tweetBoxRemove: ['bg-dark'],
+            terminalAdd: ['bg-terminal-blue-dark'],
+            terminalRemove: ['bg-terminal-dark']
+          });
+        } else if (body.classList.contains('light')) {
+          toggleTheme('light', 'light-blue', {
+            iconAdd: ['bg-h-5290aa', 'tx-white'],
+            iconRemove: ['bg-black'],
+            linkAdd: ['text-blue-light'],
+            linkRemove: ['text-light'],
+            tweetBoxAdd: ['bg-blue-light'],
+            tweetBoxRemove: ['bg-light'],
+            terminalAdd: ['bg-terminal-blue-light'],
+            terminalRemove: ['bg-terminal-light']
+          });
+        } else if (body.classList.contains('dark-pink')) {
+          toggleTheme('dark-pink', 'dark-blue', {
+            iconAdd: ['bg-h-03131d'],
+            iconRemove: ['bg-h-43091d'],
+            linkAdd: ['text-blue-dark'],
+            linkRemove: ['text-pink-dark'],
+            tweetBoxAdd: ['bg-blue-dark'],
+            tweetBoxRemove: ['bg-pink-dark'],
+            terminalAdd: ['bg-terminal-blue-dark'],
+            terminalRemove: ['bg-terminal-pink-dark']
+          });
+        } else if (body.classList.contains('light-pink')) {
+          toggleTheme('light-pink', 'light-blue', {
+            iconAdd: ['bg-h-5290aa'],
+            iconRemove: ['bg-h-aa5275'],
+            linkAdd: ['text-blue-light'],
+            linkRemove: ['text-pink-light'],
+            tweetBoxAdd: ['bg-blue-light'],
+            tweetBoxRemove: ['bg-pink-light'],
+            terminalAdd: ['bg-terminal-blue-light'],
+            terminalRemove: ['bg-terminal-pink-light']
+          });
+        } else if (body.classList.contains('dark-violet')) {
+          toggleTheme('dark-violet', 'dark-blue', {
+            iconAdd: ['bg-h-03131d'],
+            iconRemove: ['bg-h-8d52aa'],
+            linkAdd: ['text-blue-dark'],
+            linkRemove: ['text-violet-dark'],
+            tweetBoxAdd: ['bg-blue-dark'],
+            tweetBoxRemove: ['bg-violet-dark'],
+            terminalAdd: ['bg-terminal-blue-dark'],
+            terminalRemove: ['bg-terminal-violet-dark']
+          });
+        } else if (body.classList.contains('light-violet')) {
+          toggleTheme('light-violet', 'light-blue', {
+            iconAdd: ['bg-h-5290aa'],
+            iconRemove: ['bg-h-4c0e65'],
+            linkAdd: ['text-blue-light'],
+            linkRemove: ['text-violet-light'],
+            tweetBoxAdd: ['bg-blue-light'],
+            tweetBoxRemove: ['bg-violet-light'],
+            terminalAdd: ['bg-terminal-blue-light'],
+            terminalRemove: ['bg-terminal-violet-light']
+          });
+        } else if (body.classList.contains('dark-green')) {
+          toggleTheme('dark-green', 'dark-blue', {
+            iconAdd: ['bg-h-03131d'],
+            iconRemove: ['bg-h-2b650e'],
+            linkAdd: ['text-blue-dark'],
+            linkRemove: ['text-green-dark'],
+            tweetBoxAdd: ['bg-blue-dark'],
+            tweetBoxRemove: ['bg-green-dark'],
+            terminalAdd: ['bg-terminal-blue-dark'],
+            terminalRemove: ['bg-terminal-green-dark']
+          });
+        } else if (body.classList.contains('light-green')) {
+          toggleTheme('light-green', 'light-blue', {
+            iconAdd: ['bg-h-5290aa'],
+            iconRemove: ['bg-h-84aa52'],
+            linkAdd: ['text-blue-light'],
+            linkRemove: ['text-green-light'],
+            tweetBoxAdd: ['bg-blue-light'],
+            tweetBoxRemove: ['bg-green-light'],
+            terminalAdd: ['bg-terminal-blue-light'],
+            terminalRemove: ['bg-terminal-green-light']
+          });
+        }
+    };
+
+    // Toggle Green Theme
+    const toggleGreen = () => {
+        const body = document.body;
+
+        if (body.classList.contains('dark')) {
+          toggleTheme('dark', 'dark-green', {
+            iconAdd: ['bg-h-2b650e', 'tx-white'],
+            iconRemove: ['bg-white', 'tx-black'],
+            linkAdd: ['text-green-dark'],
+            linkRemove: ['text-dark'],
+            tweetBoxAdd: ['bg-green-dark'],
+            tweetBoxRemove: ['bg-dark'],
+            terminalAdd: ['bg-terminal-green-dark'],
+            terminalRemove: ['bg-terminal-dark']
+          });
+        } else if (body.classList.contains('light')) {
+          toggleTheme('light', 'light-green', {
+            iconAdd: ['bg-h-84aa52', 'tx-white'],
+            iconRemove: ['bg-black'],
+            linkAdd: ['text-green-light'],
+            linkRemove: ['text-light'],
+            tweetBoxAdd: ['bg-green-light'],
+            tweetBoxRemove: ['bg-light'],
+            terminalAdd: ['bg-terminal-green-light'],
+            terminalRemove: ['bg-terminal-light']
+          });
+        } else if (body.classList.contains('dark-blue')) {
+          toggleTheme('dark-blue', 'dark-green', {
+            iconAdd: ['bg-h-2b650e'],
+            iconRemove: ['bg-h-03131d'],
+            linkAdd: ['text-green-dark'],
+            linkRemove: ['text-blue-dark'],
+            tweetBoxAdd: ['bg-green-dark'],
+            tweetBoxRemove: ['bg-blue-dark'],
+            terminalAdd: ['bg-terminal-green-dark'],
+            terminalRemove: ['bg-terminal-blue-dark']
+          });
+        } else if (body.classList.contains('light-blue')) {
+          toggleTheme('light-blue', 'light-green', {
+            iconAdd: ['bg-h-84aa52'],
+            iconRemove: ['bg-h-5290aa'],
+            linkAdd: ['text-green-light'],
+            linkRemove: ['text-blue-light'],
+            tweetBoxAdd: ['bg-green-light'],
+            tweetBoxRemove: ['bg-blue-light'],
+            terminalAdd: ['bg-terminal-green-light'],
+            terminalRemove: ['bg-terminal-blue-light']
+          });
+        } else if (body.classList.contains('dark-pink')) {
+          toggleTheme('dark-pink', 'dark-green', {
+            iconAdd: ['bg-h-2b650e'],
+            iconRemove: ['bg-h-43091d'],
+            linkAdd: ['text-green-dark'],
+            linkRemove: ['text-pink-dark'],
+            tweetBoxAdd: ['bg-green-dark'],
+            tweetBoxRemove: ['bg-pink-dark'],
+            terminalAdd: ['bg-terminal-green-dark'],
+            terminalRemove: ['bg-terminal-pink-dark']
+          });
+        } else if (body.classList.contains('light-pink')) {
+          toggleTheme('light-pink', 'light-green', {
+            iconAdd: ['bg-h-84aa52'],
+            iconRemove: ['bg-h-aa5275'],
+            linkAdd: ['text-green-light'],
+            linkRemove: ['text-pink-light'],
+            tweetBoxAdd: ['bg-green-light'],
+            tweetBoxRemove: ['bg-pink-light'],
+            terminalAdd: ['bg-terminal-green-light'],
+            terminalRemove: ['bg-terminal-pink-light']
+          });
+        } else if (body.classList.contains('dark-violet')) {
+          toggleTheme('dark-violet', 'dark-green', {
+            iconAdd: ['bg-h-2b650e'],
+            iconRemove: ['bg-h-8d52aa'],
+            linkAdd: ['text-green-dark'],
+            linkRemove: ['text-violet-dark'],
+            tweetBoxAdd: ['bg-green-dark'],
+            tweetBoxRemove: ['bg-violet-dark'],
+            terminalAdd: ['bg-terminal-green-dark'],
+            terminalRemove: ['bg-terminal-violet-dark']
+          });
+        } else if (body.classList.contains('light-violet')) {
+          toggleTheme('light-violet', 'light-green', {
+            iconAdd: ['bg-h-84aa52'],
+            iconRemove: ['bg-h-4c0e65'],
+            linkAdd: ['text-green-light'],
+            linkRemove: ['text-violet-light'],
+            tweetBoxAdd: ['bg-green-light'],
+            tweetBoxRemove: ['bg-violet-light'],
+            terminalAdd: ['bg-terminal-green-light'],
+            terminalRemove: ['bg-terminal-violet-light']
+          });
+        }
+    };
+
+    // Toggle Dark Theme
+    const toggleDark = () => {
+        const body = document.body;
+        if (body.classList.contains('dark-violet')) {
+          toggleTheme('dark-violet', 'dark', {
+          iconAdd: ['bg-white', 'tx-black'],  
+          iconRemove: ['bg-h-8d52aa', 'tx-white'],  
+            linkAdd: ['text-violet-dark'],
+            linkRemove: ['text-dark'],
+            tweetBoxAdd: ['bg-violet-dark'],
+            tweetBoxRemove: ['bg-dark'],
+            terminalAdd: ['bg-terminal-violet-dark'],
+            terminalRemove: ['bg-terminal-dark']
+          });
+        } else if (body.classList.contains('light-violet')) {
+          toggleTheme('light-violet', 'light', {
+            iconAdd: ['bg-black'], 
+            iconRemove: ['bg-h-4c0e65'],  
+            linkAdd: ['text-violet-light'],
+            linkRemove: ['text-dark'],
+            tweetBoxAdd: ['bg-violet-light'],
+            tweetBoxRemove: ['bg-light'],
+            terminalAdd: ['bg-terminal-violet-light'],
+            terminalRemove: ['bg-terminal-light']
+          });
+        } else if (body.classList.contains('dark-pink')) {
+          toggleTheme('dark-pink', 'dark', {
+            iconAdd:  ['bg-white', 'tx-black'],
+            iconRemove: ['bg-h-43091d', 'tx-white'],
+            linkAdd: ['text-pink-dark'],
+            linkRemove: ['text-dark'],
+            tweetBoxAdd: ['bg-pink-dark'],
+            tweetBoxRemove: ['bg-dark'],
+            terminalAdd: ['bg-terminal-pink-dark'],
+            terminalRemove: ['bg-terminal-dark']
+          });
+        } else if (body.classList.contains('light-pink')) {
+          toggleTheme('light-pink', 'light', {
+            iconAdd: ['bg-black'],
+            iconRemove: ['bg-black']['bg-h-aa5275'],
+            linkAdd: ['text-pink-light'],
+            linkRemove: ['text-dark'],
+            tweetBoxAdd: ['bg-pink-light'],
+            tweetBoxRemove: ['bg-light'],
+            terminalAdd: ['bg-terminal-pink-light'],
+            terminalRemove: ['bg-terminal-light']
+          });
+        } else if (body.classList.contains('dark-blue')) {
+          toggleTheme('dark-blue', 'dark', {
+          iconAdd: ['bg-white', 'tx-black'] ,
+            iconRemove: ['bg-h-03131d', 'tx-white'],
+            linkAdd: ['text-blue-dark'],
+            linkRemove: ['text-dark'],
+            tweetBoxAdd: ['bg-blue-dark'],
+            tweetBoxRemove: ['bg-dark'],
+            terminalAdd: ['bg-terminal-blue-dark'],
+            terminalRemove: ['bg-terminal-dark']
+          });
+        } else if (body.classList.contains('light-blue')) {
+          toggleTheme('light-blue', 'light', {
+            iconAdd: ['bg-black', 'tx-white'],
+            iconRemove: ['bg-h-5290aa', 'tx-black'],
+            linkAdd: ['text-blue-light'],
+            linkRemove: ['text-dark'],
+            tweetBoxAdd: ['bg-blue-light'],
+            tweetBoxRemove: ['bg-light'],
+            terminalAdd: ['bg-terminal-blue-light'],
+            terminalRemove: ['bg-terminal-light']
+          });
+        } else if (body.classList.contains('dark-green')) {
+          toggleTheme('dark-green', 'dark', {
+            iconAdd: ['bg-white', 'tx-black'],
+            iconRemove: ['bg-h-2b650e', 'tx-white'],
+            linkAdd: ['text-green-dark'],
+            linkRemove: ['text-dark'],
+            tweetBoxAdd: ['bg-green-dark'],
+            tweetBoxRemove: ['bg-dark'],
+            terminalAdd: ['bg-terminal-green-dark'],
+            terminalRemove: ['bg-terminal-dark']
+          });
+        } else if (body.classList.contains('light-green')) {
+          toggleTheme('light-green', 'light', {
+            iconAdd: ['bg-black', 'tx-white'],
+            iconRemove: ['bg-h-4c0e65', 'tx-black'],
+            linkAdd: ['text-green-light'],
+            linkRemove: ['text-dark'],
+            tweetBoxAdd: ['bg-green-light'],
+            tweetBoxRemove: ['bg-light'],
+            terminalAdd: ['bg-terminal-green-light'],
+            terminalRemove: ['bg-terminal-light']
+          });
+        }
+    };
+  
+
+    // Initialize the page with the saved theme on load
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      document.addEventListener('DOMContentLoaded', () => {
+        savedTheme(); 
+      });
+    }
+
+
+    
 </script>
 <html>
   <html-head />

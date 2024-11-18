@@ -18,6 +18,37 @@
     </h3>
   </if>
   <nav class="flex flex-center-y">
+
+  <div class="flex flex-center gap-5 mr-10">
+        <!-- Theme Chooser -->
+          <button
+            class="bg-h-121212 pill w-16 h-16 outline-none cursor-pointer b-transparent "
+            click=toggleDark
+          ></button>
+          <button
+            class="bg-h-528909 pill w-16 h-16 outline-none cursor-pointer b-transparent"
+            click=toggleGreen
+          ></button>
+          <button
+            class="bg-h-0077b6 pill w-16 h-16 outline-none cursor-pointer b-transparent"
+            click=toggleBlue
+          ></button>
+          <button
+            class="bg-h-890934 pill w-16 h-16 outline-none cursor-pointer b-transparent"
+            click=togglePink
+          ></button>
+          <button
+            class="bg-h-710989 pill w-16 h-16 outline-none cursor-pointer b-transparent mr-5"
+            click=toggleViolet
+          ></button>
+        <!-- Toggle Light and Dark Mode -->
+        <i 
+          class="fa-solid fa-sun flex flex-center bg-white pill w-28 h-28 cursor-pointer tx-black"
+          id="modeIcon" 
+          click=toggleMode
+        ></i>
+    </div>
+
     <a class="tx-white" href="/temple/docs/index.html">Docs</a>
     <a 
       class="tx-t-1 tx-5xl ml-10" 
